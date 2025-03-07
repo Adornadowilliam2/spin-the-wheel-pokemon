@@ -1,56 +1,12 @@
-# my-ember-app
+# React + Vite
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Prerequisites
+Currently, two official plugins are available:
 
-You will need the following things properly installed on your computer.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (with npm)
-- [Ember CLI](https://cli.emberjs.com/release/)
-- [Google Chrome](https://google.com/chrome/)
+## Expanding the ESLint configuration
 
-## Installation
-
-- `git clone <repository-url>` this repository
-- `cd my-ember-app`
-- `npm install`
-
-## Running / Development
-
-- `npm run start`
-- Visit your app at [http://localhost:4200](http://localhost:4200).
-- Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-- `npm run test`
-- `npm run test:ember -- --server`
-
-### Linting
-
-- `npm run lint`
-- `npm run lint:fix`
-
-### Building
-
-- `npm exec ember build` (development)
-- `npm run build` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-- [ember.js](https://emberjs.com/)
-- [ember-cli](https://cli.emberjs.com/release/)
-- Development Browser Extensions
-  - [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  - [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
