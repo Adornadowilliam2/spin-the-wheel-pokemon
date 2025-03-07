@@ -3,7 +3,7 @@ import { SpinWheel } from 'react-spin-wheel';
 import 'react-spin-wheel/dist/index.css'; 
 import { ToastContainer, toast } from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css';  
-
+import logo from "../public/logo.png"
 
 const fetchPokemonData = async () => {
   try {
@@ -57,7 +57,7 @@ function App() {
             items={pokemonNames}  
             onFinishSpin={handleSpinFinish}  
           />
-          <img src="./public/logo.png" alt="pokemon logo" className='block m-auto' />
+          <img src={logo} alt="pokemon logo" className='block m-auto' />
         </>
       ) : (
         <p>Loading Pokémon data...</p>
