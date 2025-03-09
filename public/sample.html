@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .slot-machine-container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .slot-reels {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .reel {
+            width: 50px;
+            height: 50px;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #message {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            width: 60px;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slot-machine-container">
+        <h1>Casino Slot Machine</h1>
+
+        <div class="slot-reels">
+            <div class="reel" id="reel1"></div>
+            <div class="reel" id="reel2"></div>
+            <div class="reel" id="reel3"></div>
+        </div>
+
+        <div class="controls">
+            <button id="spinButton">Spin</button>
+            <div id="message"></div>
+            <div>Balance: $<span id="balance">100</span></div>
+            <div>Bet: $<input type="number" id="betAmount" value="1" min="1" max="100"></div>
+        </div>
+    </div>
+
+    <script>
+        const symbols = ['🍒', '🍊', '🍉', '🍓', '🍀'];
+        let balance = 100;
+
+        const reel1 = document.getElementById('reel1');
+        const reel2 = document.getElementById('reel2');
+        const reel3 = document.getElementById('reel3');
+        const message = document.getElementById('message');
+        const balanceDisplay = document.getElementById('balance');
+        const betAmountInput = document.getElementById('betAmount');
+        const spinButton = document.getElementById('spinButton');
+
+        spinButton.addEventListener('click', spinReels);
+
+        function spinReels() {
+            const betAmount = parseInt(betAmountInput.value);
+            if (betAmount <= 0 || betAmount > balance) {
+                message.textContent = 'Invalid bet amount!';
+                return;
+            }
+
+            // Deduct the bet amount from the balance
+            balance -= betAmount;
+            balanceDisplay.textContent = balance;
+
+            // Spin the reels
+            const reel1Result = getRandomSymbol();
+            const reel2Result = getRandomSymbol();
+            const reel3Result = getRandomSymbol();
+
+            // Display the results of the reels
+            reel1.textContent = reel1Result;
+            reel2.textContent = reel2Result;
+            reel3.textContent = reel3Result;
+
+            // Check if the player wins
+            if (reel1Result === reel2Result && reel2Result === reel3Result) {
+                const payout = getPayout(reel1Result);
+                balance += betAmount * payout;
+                balanceDisplay.textContent = balance;
+                message.textContent = `You won! Payout: $${betAmount * payout}`;
+            } else {
+                message.textContent = 'No win, try again!';
+            }
+        }
+
+        function getRandomSymbol() {
+            return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+
+        function getPayout(symbol) {
+            const payouts = {
+                '🍒': 5,
+                '🍊': 10,
+                '🍉': 15,
+                '🍓': 20,
+                '🍀': 25
+            };
+            return payouts[symbol] || 0;
+        }
+
+    </script>
+</body>
+
+</html>

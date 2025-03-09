@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { SpinWheel } from 'react-spin-wheel';
-import 'react-spin-wheel/dist/index.css'; 
+import { Roulette } from 'react-custom-roulette';  // Import the Roulette component from react-custom-roulette
+import 'react-custom-roulette/dist/index.css';  // Import the required CSS
 import { ToastContainer, toast } from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css';  
-import logo from "../public/logo.png"
+import logo from "../public/logo.png";
 
 const fetchPokemonData = async () => {
   try {
@@ -28,15 +28,12 @@ function App() {
   }, []);
 
   const pokemonNames = pokemonData.map(pokemon => pokemon.name);
-  const pokemonImages = pokemonData.map(pokemon => pokemon.image); 
+  const pokemonImages = pokemonData.map(pokemon => pokemon.image);
 
-  
   const handleSpinFinish = (item) => {
-    
     const index = pokemonNames.indexOf(item);
     const pokemonImage = pokemonImages[index];
 
-    
     toast.info(
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <img
@@ -49,13 +46,21 @@ function App() {
     );
   };
 
+  // Prepare the data for the roulette wheel
+  const rouletteData = pokemonNames.map(name => ({
+    option: name,  // The name of the Pokémon
+    style: { backgroundColor: '#fff', color: '#000' }  // Customize the style if you want
+  }));
+
   return (
     <div>
       {pokemonNames.length > 0 ? (
         <>
-          <SpinWheel
-            items={pokemonNames}  
-            onFinishSpin={handleSpinFinish}  
+          <Roulette
+            options={rouletteData}  // Pass the options to the roulette wheel
+            onComplete={handleSpinFinish}  // Event handler after the spin finishes
+            buttonText="Spin!"  // Customize the button text
+            buttonStyle={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}  // Button styling
           />
           <img src={logo} alt="pokemon logo" className='block m-auto' />
         </>
