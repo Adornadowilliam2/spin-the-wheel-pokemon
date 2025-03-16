@@ -21,6 +21,12 @@ function App() {
     const getPokemonData = async () => {
       const data = await fetchPokemonData();
       setPokemonData(data);
+      
+      // Load images from localStorage if available
+      const savedImages = JSON.parse(localStorage.getItem('pokemonImages')) || [];
+      if (savedImages.length > 0) {
+        console.log("Loaded saved Pokémon images from localStorage", savedImages);
+      }
     };
 
     getPokemonData();
@@ -31,6 +37,13 @@ function App() {
     const randomIndex = Math.floor(Math.random() * pokemonData.length);
     const pokemon = pokemonData[randomIndex];
     setSelectedPokemon(pokemon);
+
+    // Save the selected Pokémon image in localStorage if it's not already saved
+    const savedImages = JSON.parse(localStorage.getItem('pokemonImages')) || [];
+    if (!savedImages.includes(pokemon.image)) {
+      savedImages.push(pokemon.image);
+      localStorage.setItem('pokemonImages', JSON.stringify(savedImages));
+    }
 
     // Show a toast notification with the selected Pokémon's info
     toast.info(
