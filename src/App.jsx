@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Roulette } from 'react-custom-roulette';  // Import the Roulette component from react-custom-roulette
-import 'react-custom-roulette/dist/index.css';  // Import the required CSS
 import { ToastContainer, toast } from 'react-toastify';  
 import 'react-toastify/dist/ReactToastify.css';  
 import logo from "../public/logo.png";
@@ -17,6 +15,7 @@ const fetchPokemonData = async () => {
 
 function App() {
   const [pokemonData, setPokemonData] = useState([]);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   useEffect(() => {
     const getPokemonData = async () => {
@@ -27,46 +26,64 @@ function App() {
     getPokemonData();
   }, []);
 
-  const pokemonNames = pokemonData.map(pokemon => pokemon.name);
-  const pokemonImages = pokemonData.map(pokemon => pokemon.image);
+  const handleGetPokemon = () => {
+    // Randomly pick a Pokémon from the data
+    const randomIndex = Math.floor(Math.random() * pokemonData.length);
+    const pokemon = pokemonData[randomIndex];
+    setSelectedPokemon(pokemon);
 
-  const handleSpinFinish = (item) => {
-    const index = pokemonNames.indexOf(item);
-    const pokemonImage = pokemonImages[index];
-
+    // Show a toast notification with the selected Pokémon's info
     toast.info(
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <img
-          src={pokemonImage}
-          alt={item}
+          src={pokemon.image}
+          alt={pokemon.name}
           style={{ width: '50px', height: '50px', marginRight: '10px' }}
         />
-        <span>You got {item}!</span>
+        <span>You got {pokemon.name}!</span>
       </div>,
     );
   };
 
-  // Prepare the data for the roulette wheel
-  const rouletteData = pokemonNames.map(name => ({
-    option: name,  // The name of the Pokémon
-    style: { backgroundColor: '#fff', color: '#000' }  // Customize the style if you want
-  }));
-
   return (
-    <div>
-      {pokemonNames.length > 0 ? (
+    <div style={{padding:"30px"}}>
+      <img src={logo} alt="pokemon logo" className='block m-auto' />
+      
+      {pokemonData.length > 0 ? (
         <>
-          <Roulette
-            options={rouletteData}  // Pass the options to the roulette wheel
-            onComplete={handleSpinFinish}  // Event handler after the spin finishes
-            buttonText="Spin!"  // Customize the button text
-            buttonStyle={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}  // Button styling
-          />
-          <img src={logo} alt="pokemon logo" className='block m-auto' />
+          <button 
+            onClick={handleGetPokemon} 
+            style={{ padding: '10px 20px', fontSize: '16px', cursor: 'pointer', margin:"auto", display:'block' }}
+          >
+            Get Pokémon!
+          </button>
+
+          {selectedPokemon && (
+            <div 
+              style={{
+                marginTop: '20px', 
+                padding: '20px', 
+                border: '1px solid #ccc', 
+                borderRadius: '10px', 
+                textAlign: 'center', 
+                maxWidth: '200px', 
+                margin: '20px auto'
+              }}
+            >
+              <img
+                src={selectedPokemon.image}
+                alt={selectedPokemon.name}
+                style={{ width: '100px', height: '100px' ,display:'block',margin:'auto'
+                }}
+              />
+              <h3>{selectedPokemon.name}</h3>
+            </div>
+          )}
         </>
       ) : (
-        <p>Loading Pokémon data...</p>
+        <p style={{ textAlign: 'center' }}>Loading Pokémon data...</p>
       )}
+
       <ToastContainer />  {/* Toast container to render the toast notifications */}
     </div>
   );
