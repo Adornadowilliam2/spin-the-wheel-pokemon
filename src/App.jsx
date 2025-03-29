@@ -33,19 +33,19 @@ function App() {
   }, []);
 
   const handleGetPokemon = () => {
-    // Randomly pick a Pokémon from the data
+    
     const randomIndex = Math.floor(Math.random() * pokemonData.length);
     const pokemon = pokemonData[randomIndex];
     setSelectedPokemon(pokemon);
 
-    // Save the selected Pokémon image in localStorage if it's not already saved
+  
     const savedImages = JSON.parse(localStorage.getItem('pokemonImages')) || [];
     if (!savedImages.includes(pokemon.image)) {
       savedImages.push(pokemon.image);
       localStorage.setItem('pokemonImages', JSON.stringify(savedImages));
     }
 
-    // Show a toast notification with the selected Pokémon's info
+    
     toast.info(
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <img
