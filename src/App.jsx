@@ -97,7 +97,7 @@ function App() {
         <p style={{ textAlign: 'center' }}>Loading Pokémon data...</p>
       )}
 
-      <ToastContainer />  {/* Toast container to render the toast notifications */}
+      <ToastContainer />  
     </div>
   );
 }
